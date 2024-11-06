@@ -1,0 +1,37 @@
+clr
+
+mov r2 [virtual-signal=signal-S]
+mov r3 [virtual-signal=signal-M]
+mov r4 [virtual-signal=signal-H]
+
+:loop
+fir r1 [virtual-signal=signal-I]
+slp 60
+inc r2
+beq r2 60 :add_min
+beq r3 60 :add_hour
+bne r1 0 :reset
+mov out1 r2
+mov out2 r3
+mov out3 r4
+jmp :loop
+
+:add_min
+inc r3
+mul r2 0
+jmp :loop
+
+:add_hour
+inc r4
+mul r3 0
+mul r2 0
+jmp :loop
+
+:reset
+mul r2 0
+mul r3 0
+mul r4 0
+mov out1 r2
+mov out2 r3
+mov out3 r4
+jmp :loop
